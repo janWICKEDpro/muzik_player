@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +37,8 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
               FloatingActionButtonLocation.centerDocked,
           floatingActionButton: InkWell(
             onTap: () {
-              context.go('/playing');
+              log('clicked');
+              context.push('/playing');
             },
             child: Container(
               height: 100,

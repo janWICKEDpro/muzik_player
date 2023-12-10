@@ -5,16 +5,20 @@ import 'package:muzik_player/themes/app_theme.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const App());
+  runApp(App());
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
 
+  final router = AppRouter().router();
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: AppRouter().router,
+      // routeInformationParser: AppRouter().router.routeInformationParser,
+      // routeInformationProvider: AppRouter().router.routeInformationProvider,
+      // routerDelegate: AppRouter().router.routerDelegate,
+      routerConfig: router,
       theme: MuzikPlayerTheme.themeData,
     );
   }

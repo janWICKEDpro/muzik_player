@@ -11,60 +11,95 @@ class AppRouter {
   final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
   final _shellNavigatorKey = GlobalKey<NavigatorState>();
-  GoRouter get router => GoRouter(navigatorKey: _rootNavigatorKey, routes: [
-        ShellRoute(
-            navigatorKey: _shellNavigatorKey,
-            builder: (context, state, child) {
-              return AppTabBar(child: child);
+  GoRouter router() {
+    return GoRouter(
+        debugLogDiagnostics: true,
+        navigatorKey: _rootNavigatorKey,
+        initialLocation: '/',
+        routes: [
+          GoRoute(
+            path: '/playing',
+            parentNavigatorKey: _rootNavigatorKey,
+            builder: (context, state) {
+              return const PlaySongScreen();
             },
-            routes: [
-              GoRoute(
-                  path: '/',
-                  parentNavigatorKey: _shellNavigatorKey,
-                  builder: (context, state) {
-                    return const MainScreen();
-                  },
-                  routes: [
-                    GoRoute(
+            // pageBuilder: (context, state) {
+            //   return CustomTransitionPage(
+            //       transitionsBuilder: (context, animation,
+            //           secondaryAnimation, child) {
+            //         const begin = Offset(0.0, 1.0);
+            //         const end = Offset.zero;
+            //         const curve = Curves.ease;
+
+            //         var tween = Tween(begin: begin, end: end)
+            //             .chain(CurveTween(curve: curve));
+
+            //         return SlideTransition(
+            //           position: animation.drive(tween),
+            //           child: child,
+            //         );
+            //       },
+            //       child: const PlaySongScreen());
+            // }),
+          ),
+          ShellRoute(
+              navigatorKey: _shellNavigatorKey,
+              builder: (context, state, child) {
+                return AppTabBar(child: child);
+              },
+              routes: [
+                GoRoute(
+                    path: '/',
+                    parentNavigatorKey: _shellNavigatorKey,
+                    builder: (context, state) {
+                      return const MainScreen();
+                    },
+                    routes: [
+                      GoRoute(
                         path: 'playing',
                         parentNavigatorKey: _rootNavigatorKey,
-                        pageBuilder: (context, state) {
-                          return CustomTransitionPage(
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                const begin = Offset(0.0, 1.0);
-                                const end = Offset.zero;
-                                const curve = Curves.ease;
+                        builder: (context, state) {
+                          return const PlaySongScreen();
+                        },
+                        // pageBuilder: (context, state) {
+                        //   return CustomTransitionPage(
+                        //       transitionsBuilder: (context, animation,
+                        //           secondaryAnimation, child) {
+                        //         const begin = Offset(0.0, 1.0);
+                        //         const end = Offset.zero;
+                        //         const curve = Curves.ease;
 
-                                var tween = Tween(begin: begin, end: end)
-                                    .chain(CurveTween(curve: curve));
+                        //         var tween = Tween(begin: begin, end: end)
+                        //             .chain(CurveTween(curve: curve));
 
-                                return SlideTransition(
-                                  position: animation.drive(tween),
-                                  child: child,
-                                );
-                              },
-                              child: const PlaySongScreen());
-                        }),
-                  ]),
-              GoRoute(
-                  path: '/artists',
-                  parentNavigatorKey: _shellNavigatorKey,
-                  builder: (context, state) {
-                    return const Artists();
-                  }),
-              GoRoute(
-                  path: '/albums',
-                  parentNavigatorKey: _shellNavigatorKey,
-                  builder: (context, state) {
-                    return const Albums();
-                  }),
-              GoRoute(
-                  path: '/playlists',
-                  parentNavigatorKey: _shellNavigatorKey,
-                  builder: (context, state) {
-                    return const PlayLists();
-                  }),
-            ]),
-      ]);
+                        //         return SlideTransition(
+                        //           position: animation.drive(tween),
+                        //           child: child,
+                        //         );
+                        //       },
+                        //       child: const PlaySongScreen());
+                        // }),
+                      )
+                    ]),
+                GoRoute(
+                    path: '/artists',
+                    parentNavigatorKey: _shellNavigatorKey,
+                    builder: (context, state) {
+                      return const Artists();
+                    }),
+                GoRoute(
+                    path: '/albums',
+                    parentNavigatorKey: _shellNavigatorKey,
+                    builder: (context, state) {
+                      return const Albums();
+                    }),
+                GoRoute(
+                    path: '/playlists',
+                    parentNavigatorKey: _shellNavigatorKey,
+                    builder: (context, state) {
+                      return const PlayLists();
+                    }),
+              ]),
+        ]);
+  }
 }

@@ -21,7 +21,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         height: 80,
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
             color: AppColors.primaryGrey,
             borderRadius: BorderRadius.vertical(
@@ -30,7 +30,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            const Row(
               children: [
                 Icon(Icons.playlist_play),
                 Text(
@@ -42,7 +42,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
             IconButton(
                 onPressed: () {},
                 icon: Transform.rotate(
-                    angle: -pi / 2, child: Icon(Icons.arrow_forward_ios)))
+                    angle: -pi / 2, child: const Icon(Icons.arrow_forward_ios)))
           ],
         ),
       ),
@@ -67,7 +67,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Gap(40),
+                const Gap(40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -78,11 +78,12 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                         icon: Transform.rotate(
                             angle: pi / 2,
                             child: Icon(Icons.arrow_forward_ios))),
-                    Text(
+                    const Text(
                       'Now Playing',
                       style: MuzikPlayerTextTheme.songNameStyle,
                     ),
-                    IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),
+                    IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.more_horiz)),
                   ],
                 ),
                 Gap(30),
@@ -99,7 +100,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
