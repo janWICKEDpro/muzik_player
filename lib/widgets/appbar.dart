@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
@@ -29,6 +30,63 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
         child: Scaffold(
           drawer: Drawer(
             child: Container(),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: Container(
+            height: 100,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            decoration: const BoxDecoration(
+                color: AppColors.primaryGrey,
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15))),
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/album.png'))),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Gap(20),
+                          Text('Never The same'),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.fast_rewind_sharp)),
+                          IconButton(onPressed: () {}, icon: Icon(Icons.pause)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.fast_forward))
+                        ],
+                      ),
+                      SizedBox(
+                        width: 290,
+                        child: Slider(
+                          value: 24,
+                          max: 100,
+                          min: 0,
+                          onChanged: (val) {},
+                          activeColor: AppColors.primaryWhitishGrey,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
           appBar: AppBar(
             backgroundColor: AppColors.primaryBlack,

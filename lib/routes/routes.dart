@@ -7,9 +7,9 @@ import 'package:muzik_player/screens/playlists/playlists.dart';
 import 'package:muzik_player/widgets/appbar.dart';
 
 class AppRouter {
-  final _rootNavigatorKey = GlobalKey<NavigatorState>();
+  // final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
-  final _shellNavigatorKey = GlobalKey<NavigatorState>();
+  // final _shellNavigatorKey = GlobalKey<NavigatorState>();
   GoRouter get router => GoRouter(
           //  navigatorKey: _rootNavigatorKey,
           routes: [

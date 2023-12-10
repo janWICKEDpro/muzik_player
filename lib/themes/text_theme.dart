@@ -8,10 +8,10 @@ class MuzikPlayerTextTheme {
       color: AppColors.primaryWhitishGrey,
       fontFamily: 'Poppins',
       fontSize: 15,
-      fontWeight: FontWeight.w300);
+      fontWeight: FontWeight.w900);
   static final authorNameStyle = TextStyle(
       color: AppColors.primaryWhitishGrey.withOpacity(0.6),
       fontFamily: 'Poppins',
       fontSize: 12,
-      fontWeight: FontWeight.w300);
+      fontWeight: FontWeight.w400);
 }

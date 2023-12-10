@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muzik_player/themes/colors.dart';
+import 'package:muzik_player/widgets/song_tile.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
       child: ListView.builder(
           itemCount: 100,
           itemBuilder: (context, index) {
-            return ListTile();
+            return SongTile();
           }),
     );
   }
