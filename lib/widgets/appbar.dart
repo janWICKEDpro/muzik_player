@@ -50,14 +50,17 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/album.png'))),
+                    Hero(
+                      tag: '12',
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage('assets/images/album.png'))),
+                      ),
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

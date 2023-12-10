@@ -1,7 +1,10 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
+import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 
 class PlaySongScreen extends StatefulWidget {
@@ -15,6 +18,34 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 80,
+        padding: EdgeInsets.all(10),
+        decoration: const BoxDecoration(
+            color: AppColors.primaryGrey,
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(15),
+            )),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.playlist_play),
+                Text(
+                  'Playlist',
+                  style: MuzikPlayerTextTheme.songNameStyle,
+                ),
+              ],
+            ),
+            IconButton(
+                onPressed: () {},
+                icon: Transform.rotate(
+                    angle: -pi / 2, child: Icon(Icons.arrow_forward_ios)))
+          ],
+        ),
+      ),
       body: Container(
         child: Stack(
           alignment: Alignment.center,
@@ -36,27 +67,85 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Gap(40),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(Icons.arrow_downward)),
+                        onPressed: () {
+                          context.pop();
+                        },
+                        icon: Transform.rotate(
+                            angle: pi / 2,
+                            child: Icon(Icons.arrow_forward_ios))),
                     Text(
                       'Now Playing',
-                      style: MuzikPlayerTextTheme.authorNameStyle,
+                      style: MuzikPlayerTextTheme.songNameStyle,
                     ),
                     IconButton(onPressed: () {}, icon: Icon(Icons.more_horiz)),
                   ],
                 ),
                 Gap(30),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/album.png'))),
+                Hero(
+                  tag: '12',
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/album.png'))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Never the same',
+                            style: MuzikPlayerTextTheme.songNameStyle,
+                          ),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.favorite_outline))
+                        ],
+                      ),
+                      Text(
+                        'Never the same',
+                        style: MuzikPlayerTextTheme.authorNameStyle,
+                      ),
+                      Container(
+                        width: 1000,
+                        child: Slider(
+                            activeColor: AppColors.primaryWhitishGrey,
+                            min: 0,
+                            max: 100,
+                            value: 24,
+                            onChanged: (value) {}),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.shuffle)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.fast_rewind)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.play_arrow_rounded)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.fast_forward)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.shuffle))
+                        ],
+                      )
+                    ],
+                  ),
                 )
               ],
             )
