@@ -107,7 +107,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Never the same',
                             style: MuzikPlayerTextTheme.songNameStyle,
                           ),
@@ -128,16 +128,19 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                             value: 24,
                             onChanged: (value) {}),
                       ),
+                      const Gap(40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.shuffle)),
-                          IconButton(
-                              onPressed: () {}, icon: Icon(Icons.fast_rewind)),
+                              onPressed: () {},
+                              icon: const Icon(Icons.shuffle)),
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.play_arrow_rounded)),
+                              icon: const Icon(Icons.fast_rewind)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.play_arrow_rounded)),
                           IconButton(
                               onPressed: () {}, icon: Icon(Icons.fast_forward)),
                           IconButton(
