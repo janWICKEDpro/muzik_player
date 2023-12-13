@@ -86,7 +86,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                         onPressed: () {}, icon: const Icon(Icons.more_horiz)),
                   ],
                 ),
-                Gap(30),
+                const Gap(30),
                 Hero(
                   tag: '12',
                   child: Container(
@@ -94,7 +94,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                     width: MediaQuery.of(context).size.width * 0.8,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                             fit: BoxFit.cover,
                             image: AssetImage('assets/images/album.png'))),
                   ),
