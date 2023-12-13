@@ -113,15 +113,14 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                           ),
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.favorite_outline))
+                              icon: const Icon(Icons.favorite_outline))
                         ],
                       ),
                       Text(
                         'Never the same',
                         style: MuzikPlayerTextTheme.authorNameStyle,
                       ),
-                      Container(
-                        width: 1000,
+                      SizedBox(
                         child: Slider(
                             activeColor: AppColors.primaryWhitishGrey,
                             min: 0,
