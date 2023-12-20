@@ -1,6 +1,6 @@
 # muzik_player
 
-A new Flutter project.
+A simple music player mobile application
 
 ## Getting Started
 
