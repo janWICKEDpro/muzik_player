@@ -21,9 +21,7 @@ class App extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SongsModel()..getSongs())
       ],
       child: MaterialApp.router(
-        // routeInformationParser: AppRouter().router.routeInformationParser,
-        // routeInformationProvider: AppRouter().router.routeInformationProvider,
-        // routerDelegate: AppRouter().router.routerDelegate,
+        
         routerConfig: router,
         theme: MuzikPlayerTheme.themeData,
       ),
