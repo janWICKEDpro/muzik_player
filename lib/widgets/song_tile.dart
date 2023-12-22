@@ -3,11 +3,14 @@ import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 
 class SongTile extends StatelessWidget {
-  const SongTile({super.key});
-
+  const SongTile({super.key, this.songName, this.artist, this.onTap});
+  final String? songName;
+  final String? artist;
+  final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: onTap,
       leading: Container(
         height: 50,
         width: 50,
