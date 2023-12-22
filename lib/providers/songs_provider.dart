@@ -20,6 +20,7 @@ class SongsModel extends ChangeNotifier {
       state = GetSongState.success;
       notifyListeners();
     } catch (e) {
+      log('$e');
       state = GetSongState.failed;
       notifyListeners();
     }

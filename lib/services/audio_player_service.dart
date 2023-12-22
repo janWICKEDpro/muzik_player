@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AudioPlayerService {
   final _audioPlayer = AudioPlayer();
@@ -10,14 +11,15 @@ class AudioPlayerService {
   Future<List<FileSystemEntity>> getAudio() async {
     List<FileSystemEntity> audioFiles = [];
 
+    await [
+      Permission.storage,
+    ].request();
     Directory? directory = Directory('/storage/emulated/0/');
-    Future.delayed(Duration(seconds: 1));
+
     audioFiles = directory
-        .listSync(recursive: true, followLinks: false)
+        .listSync()
         .where((element) => element.path.endsWith('.mp3'))
         .toList();
-
-    log('Got files');
     return audioFiles;
   }
 
