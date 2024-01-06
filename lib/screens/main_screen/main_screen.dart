@@ -22,7 +22,7 @@ class _MainScreenState extends State<MainScreen> {
       } else if (provider.state == GetSongState.failed) {
         return Center(
           child: Text(
-            'Failed to get songs',
+            'Failed to fetch songs',
             style:
                 MuzikPlayerTextTheme.songNameStyle.copyWith(color: Colors.red),
           ),
