@@ -21,7 +21,9 @@ class AudioPlayerService {
     return audioFiles;
   }
 
-  void pause() async {}
+  void pause(FileSystemEntity song) async {
+    await _audioPlayer.play(sourc)
+  }
 
   void play() async {}
 

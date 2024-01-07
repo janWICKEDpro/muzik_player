@@ -12,7 +12,6 @@ class SongsModel extends ChangeNotifier {
   GetSongState state = GetSongState.loading;
 
   getSongs() async {
-    log('Getting songs');
     state = GetSongState.loading;
     notifyListeners();
     try {
