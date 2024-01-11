@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 class SongsModel extends ChangeNotifier {
   final audio = AudioPlayerService();
   List<FileSystemEntity> songs = [];
+  FileSystemEntity? currentSong;
   GetSongState state = GetSongState.loading;
 
   getSongs() async {
