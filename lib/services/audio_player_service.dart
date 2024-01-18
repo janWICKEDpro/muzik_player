@@ -25,8 +25,14 @@ class AudioPlayerService {
         Directory(mainDir.path.substring(0, mainDir.path.indexOf('Android')));
 
     Stream<FileSystemEntity> files = topDir.list(recursive: true);
-    List<FileSystemEntity> filesList = await files.toList();
-    return filesList;
+    files.listen((event) {
+      if (event.path.contains('/data')) {
+      } else {
+        log('$event');
+      }
+    });
+    //  List<FileSystemEntity> filesList = await files.toList();
+    return audioFiles;
   }
 
   void pause(FileSystemEntity song) async {
