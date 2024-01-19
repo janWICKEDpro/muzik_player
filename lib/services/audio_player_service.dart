@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,15 +25,35 @@ class AudioPlayerService {
     Directory topDir =
         Directory(mainDir.path.substring(0, mainDir.path.indexOf('Android')));
 
-    Stream<FileSystemEntity> files = topDir.list(recursive: true);
-    files.listen((event) {
-      if (event.path.contains('/data')) {
-      } else {
-        log('$event');
-      }
-    });
+    Stream<FileSystemEntity> files =
+        topDir.list(recursive: true, followLinks: false);
+
+    await   traverseDirectories(topDir, audioFiles);
     //  List<FileSystemEntity> filesList = await files.toList();
     return audioFiles;
+  }
+
+  traverseDirectories(
+      Directory dir, List<FileSystemEntity> mp3Files) async {
+    List<FileSystemEntity> entities = dir.listSync();
+    for (FileSystemEntity entity in entities) {
+      if (entity is Directory) {
+        // Exclude Android/data and Android/obb directories
+        String directoryPath = entity.path;
+        if (directoryPath.contains('Android/data') ||
+            directoryPath.contains('Android/obb')) {
+          continue;
+        }
+        log('recursing');
+        await traverseDirectories(entity, mp3Files);
+      } else if (entity is File) {
+        var filePath = entity;
+        if (filePath.path.endsWith('.mp3')) {
+          log('added file');
+          mp3Files.add(filePath);
+        }
+      }
+    }
   }
 
   void pause(FileSystemEntity song) async {
