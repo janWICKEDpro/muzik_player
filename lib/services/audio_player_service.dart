@@ -22,19 +22,18 @@ class AudioPlayerService {
       exit(0);
     }
 
-    Directory topDir =
-        Directory(mainDir.path.substring(0, mainDir.path.indexOf('Android')));
+    // Directory topDir =
+    //     Directory(mainDir.path.substring(0, mainDir.path.indexOf('Android')));
 
-    Stream<FileSystemEntity> files =
-        topDir.list(recursive: true, followLinks: false);
+    // Stream<FileSystemEntity> files =
+    //     topDir.list(recursive: true, followLinks: false);
 
-    await   traverseDirectories(topDir, audioFiles);
-    //  List<FileSystemEntity> filesList = await files.toList();
+    // await   traverseDirectories(topDir, audioFiles);
+    // //  List<FileSystemEntity> filesList = await files.toList();
     return audioFiles;
   }
 
-  traverseDirectories(
-      Directory dir, List<FileSystemEntity> mp3Files) async {
+  traverseDirectories(Directory dir, List<FileSystemEntity> mp3Files) async {
     List<FileSystemEntity> entities = dir.listSync();
     for (FileSystemEntity entity in entities) {
       if (entity is Directory) {
