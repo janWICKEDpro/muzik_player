@@ -3,7 +3,7 @@ import 'package:muzik_player/themes/colors.dart';
 
 class MuzikPlayerTextTheme {
   static const tabBarStyle = TextStyle(
-      fontFamily: 'Poppins', fontSize: 18, fontWeight: FontWeight.w400);
+      fontFamily: 'Poppins', fontSize: 14, fontWeight: FontWeight.w400);
   static const songNameStyle = TextStyle(
       color: AppColors.primaryWhitishGrey,
       fontFamily: 'Poppins',

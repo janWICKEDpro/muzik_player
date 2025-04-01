@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 
@@ -26,6 +25,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
     return DefaultTabController(
         length: 4,
         initialIndex: _selectedIndex,
@@ -35,19 +35,17 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: InkWell(
+          floatingActionButton: GestureDetector(
             onTap: () {
-              log('clicked');
               context.push('/playing');
             },
             child: Container(
               height: 100,
+              margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   color: AppColors.primaryGrey,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15))),
+                  borderRadius: BorderRadius.circular(100)),
               child: Center(
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -56,11 +54,11 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                     Hero(
                       tag: '12',
                       child: Container(
-                        height: 50,
-                        width: 50,
+                        height: 0,
+                        width: 0,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            image: DecorationImage(
+                            image: const DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage('assets/images/album.png'))),
                       ),
@@ -72,20 +70,27 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Gap(20),
-                            Text('Never The same'),
+                            const Gap(20),
+                            Text(
+                              'Never The same',
+                              maxLines: 1,
+                            ),
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.fast_rewind_sharp)),
-                            IconButton(
-                                onPressed: () {}, icon: Icon(Icons.pause)),
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedPause,
+                                  color: AppColors.primaryWhitishGrey,
+                                )),
                             IconButton(
                                 onPressed: () {},
-                                icon: Icon(Icons.fast_forward))
+                                icon: const Icon(Icons.pause)),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.fast_forward))
                           ],
                         ),
                         SizedBox(
-                          width: 290,
+                          width: width * 0.8,
                           child: Slider(
                             value: 24,
                             max: 100,
@@ -102,6 +107,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
             ),
           ),
           appBar: AppBar(
+            toolbarHeight: 40,
             backgroundColor: AppColors.primaryBlack,
             actions: [
               IconButton(
@@ -109,7 +115,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                   icon: Icon(
                     Icons.search,
                     size: 30,
-                    color: AppColors.primaryWhitishGrey.withOpacity(0.6),
+                    color: AppColors.primaryWhitishGrey.withValues(alpha: 0.6),
                   ))
             ],
             bottom: TabBar(
@@ -138,24 +144,40 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                       break;
                   }
                 },
-                indicatorPadding: const EdgeInsets.only(top: 23),
-                indicatorWeight: 3,
-                indicator: BoxDecoration(
+                indicator: UnderlineTabIndicator(
+                    insets: EdgeInsets.only(top: 10),
                     borderRadius: BorderRadius.circular(5),
-                    color: AppColors.primaryWhitishGrey),
-                indicatorColor: AppColors.primaryWhitishGrey,
+                    borderSide: const BorderSide(
+                        width: 5, color: AppColors.primaryWhitishGrey)),
                 indicatorSize: TabBarIndicatorSize.label,
                 splashBorderRadius: BorderRadius.circular(5),
                 splashFactory: NoSplash.splashFactory,
                 unselectedLabelColor:
-                    AppColors.primaryWhitishGrey.withOpacity(0.6),
+                    AppColors.primaryWhitishGrey.withValues(alpha: 0.6),
                 labelColor: AppColors.primaryWhitishGrey,
                 labelStyle: MuzikPlayerTextTheme.tabBarStyle,
+                labelPadding: const EdgeInsets.symmetric(vertical: 8),
                 tabs: const [
-                  Text('Songs'),
-                  Text('Albums'),
-                  Text('Artists'),
-                  Text('Playlist'),
+                  Text(
+                    'Songs',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Albums',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Artists',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Text(
+                    'Playlist',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ]),
           ),
           body: GestureDetector(
