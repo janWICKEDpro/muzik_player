@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:marquee/marquee.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 
@@ -71,9 +72,15 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Gap(20),
-                            Text(
-                              'Never The same',
-                              maxLines: 1,
+                            SizedBox(
+                              height: 50,
+                              width: 80,
+                              child: Marquee(
+                                text: "Never the same today and forever",
+                                scrollAxis: Axis.horizontal,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                velocity: 50,
+                              ),
                             ),
                             IconButton(
                                 onPressed: () {},
