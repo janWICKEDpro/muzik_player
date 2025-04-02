@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hugeicons/hugeicons.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 
@@ -133,18 +134,45 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.shuffle)),
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedShuffle,
+                              color: AppColors.primaryWhitishGrey,
+                            ),
+                          ),
                           IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.fast_rewind)),
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedBackward02,
+                              color: AppColors.primaryWhitishGrey,
+                            ),
+                          ),
                           IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.play_arrow_rounded)),
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedPause,
+                              color: AppColors.primaryWhitishGrey,
+                            ),
+                          ),
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.fast_forward)),
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedForward02,
+                              color: AppColors.primaryWhitishGrey,
+                            ),
+                          ),
                           IconButton(
-                              onPressed: () {}, icon: Icon(Icons.shuffle))
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            icon: HugeIcon(
+                              icon: HugeIcons.strokeRoundedShuffle,
+                              color: AppColors.primaryWhitishGrey,
+                            ),
+                          ),
                         ],
                       )
                     ],
