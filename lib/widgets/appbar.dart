@@ -55,8 +55,8 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                     Hero(
                       tag: '12',
                       child: Container(
-                        height: 0,
-                        width: 0,
+                        height: 25,
+                        width: 25,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
                             image: const DecorationImage(
@@ -79,26 +79,36 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                 text: "Never the same today and forever",
                                 scrollAxis: Axis.horizontal,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                velocity: 50,
+                                velocity: 20,
                               ),
                             ),
                             IconButton(
-                                onPressed: () {},
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedPause,
-                                  color: AppColors.primaryWhitishGrey,
-                                )),
+                              onPressed: () {},
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedBackward02,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
                             IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.pause)),
+                              onPressed: () {},
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedPause,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
                             IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.fast_forward))
+                              onPressed: () {},
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedForward02,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(
                           width: width * 0.8,
                           child: Slider(
+                            padding: EdgeInsets.zero,
                             value: 24,
                             max: 100,
                             min: 0,
@@ -152,7 +162,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                   }
                 },
                 indicator: UnderlineTabIndicator(
-                    insets: EdgeInsets.only(top: 10),
+                    insets: const EdgeInsets.only(top: 10),
                     borderRadius: BorderRadius.circular(5),
                     borderSide: const BorderSide(
                         width: 5, color: AppColors.primaryWhitishGrey)),
