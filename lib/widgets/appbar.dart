@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -41,86 +43,94 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
               context.push('/playing');
             },
             child: Container(
-              height: 100,
+              height: 70,
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: BoxDecoration(
                   color: AppColors.primaryGrey,
                   borderRadius: BorderRadius.circular(100)),
-              child: Center(
-                child: Row(
+              child: LayoutBuilder(builder: (context, constraints) {
+                log("LayoutBuilder: ${constraints.maxWidth}");
+                return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Hero(
                       tag: '12',
                       child: Container(
-                        height: 25,
-                        width: 25,
+                        height: constraints.maxWidth * 0.1,
+                        width: constraints.maxWidth * 0.1,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
+                            borderRadius: BorderRadius.circular(100),
                             image: const DecorationImage(
                                 fit: BoxFit.cover,
                                 image: AssetImage('assets/images/album.png'))),
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Gap(20),
-                            SizedBox(
-                              height: 50,
-                              width: 80,
-                              child: Marquee(
-                                text: "Never the same today and forever",
-                                scrollAxis: Axis.horizontal,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                velocity: 20,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            spacing: 0,
+                            children: [
+                              SizedBox(
+                                height: 20,
+                                width: constraints.maxWidth * 0.35,
+                                child: Marquee(
+                                  text: "Never the same today and forever",
+                                  scrollAxis: Axis.horizontal,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  velocity: 20,
+                                  startAfter: const Duration(seconds: 3),
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: HugeIcon(
-                                icon: HugeIcons.strokeRoundedBackward02,
-                                color: AppColors.primaryWhitishGrey,
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {},
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedBackward02,
+                                  color: AppColors.primaryWhitishGrey,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: HugeIcon(
-                                icon: HugeIcons.strokeRoundedPause,
-                                color: AppColors.primaryWhitishGrey,
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {},
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedPause,
+                                  color: AppColors.primaryWhitishGrey,
+                                ),
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: HugeIcon(
-                                icon: HugeIcons.strokeRoundedForward02,
-                                color: AppColors.primaryWhitishGrey,
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {},
+                                icon: HugeIcon(
+                                  icon: HugeIcons.strokeRoundedForward02,
+                                  color: AppColors.primaryWhitishGrey,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: width * 0.8,
-                          child: Slider(
-                            padding: EdgeInsets.zero,
-                            value: 24,
-                            max: 100,
-                            min: 0,
-                            onChanged: (val) {},
-                            activeColor: AppColors.primaryWhitishGrey,
+                            ],
                           ),
-                        )
-                      ],
+                          SizedBox(
+                            width: constraints.maxWidth * 0.8,
+                            child: Slider(
+                              padding: EdgeInsets.zero,
+                              value: 24,
+                              max: 100,
+                              min: 0,
+                              onChanged: (val) {},
+                              activeColor: AppColors.primaryWhitishGrey,
+                            ),
+                          )
+                        ],
+                      ),
                     )
                   ],
-                ),
-              ),
+                );
+              }),
             ),
           ),
           appBar: AppBar(
