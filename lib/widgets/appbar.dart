@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:marquee/marquee.dart';
@@ -28,7 +27,6 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
     return DefaultTabController(
         length: 4,
         initialIndex: _selectedIndex,
