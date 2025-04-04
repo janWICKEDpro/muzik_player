@@ -331,10 +331,11 @@ packages:
   on_audio_query:
     dependency: "direct main"
     description:
-      name: on_audio_query
-      sha256: "28d7a247f8a0580b5d1befba15c8d8fd7e1cf3cd8e0449d54a66fc2ef27adf10"
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/on_audio_query"
+      ref: HEAD
+      resolved-ref: "4647fde880d5814fc197070956652d5f57f6f992"
+      url: "https://github.com/shahzaibkhan3356/on_audio_query_2.0.git"
+    source: git
     version: "2.9.0"
   on_audio_query_android:
     dependency: transitive

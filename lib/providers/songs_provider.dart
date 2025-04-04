@@ -16,7 +16,7 @@ class SongsModel extends ChangeNotifier {
     state = GetSongState.loading;
     notifyListeners();
     try {
-      songs = await audio.getAudio();
+      ///songs = await audio.getAudio();
       state = GetSongState.success;
       notifyListeners();
     } catch (e) {
