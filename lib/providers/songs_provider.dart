@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:muzik_player/constants/enums.dart';
 import 'package:muzik_player/services/audio_player_service.dart';
-import 'package:provider/provider.dart';
 
 class SongsModel extends ChangeNotifier {
   final audio = AudioPlayerService();

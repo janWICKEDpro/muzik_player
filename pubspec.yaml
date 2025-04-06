@@ -11,6 +11,7 @@ dependencies:
   audioplayers: ^5.2.1
   cupertino_icons: ^1.0.2
   equatable: ^2.0.5
+  on_audio_query: 
   flutter:
     sdk: flutter
   flutter_screenutil: ^5.9.0
