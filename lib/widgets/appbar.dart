@@ -106,7 +106,9 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                       ),
                                       IconButton(
                                         padding: EdgeInsets.zero,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          provider.previousSong();
+                                        },
                                         icon: HugeIcon(
                                           icon:
                                               HugeIcons.strokeRoundedBackward02,
@@ -123,7 +125,9 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                       ),
                                       IconButton(
                                         padding: EdgeInsets.zero,
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          provider.nextSong();
+                                        },
                                         icon: HugeIcon(
                                           icon:
                                               HugeIcons.strokeRoundedForward02,

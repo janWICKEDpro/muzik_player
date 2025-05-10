@@ -17,8 +17,4 @@ class AudioPlayerService {
   }
 
   void seek() async {}
-
-  void playNext() async {}
-
-  void playPrev() async {}
 }

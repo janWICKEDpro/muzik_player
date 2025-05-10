@@ -14,6 +14,8 @@ class SongsModel extends ChangeNotifier {
   FileSystemEntity? currentSong;
   GetSongState state = GetSongState.loading;
   AudioMetadata? currentAudio;
+  int _currentSongIndex = 0;
+  int get currentSongIndex => _currentSongIndex;
   getSongs() async {
     state = GetSongState.loading;
     notifyListeners();
@@ -38,6 +40,27 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  nextSong() {}
-  previousSong() {}
+  nextSong() {
+    if (_currentSongIndex < audios.length - 1) {
+      _currentSongIndex++;
+      currentAudio = audios[_currentSongIndex];
+    } else {
+      _currentSongIndex = 0;
+      currentAudio = audios[_currentSongIndex];
+    }
+    _audio.play(currentAudio!);
+    notifyListeners();
+  }
+
+  previousSong() {
+    if (_currentSongIndex > 0) {
+      _currentSongIndex--;
+      currentAudio = audios[_currentSongIndex];
+    } else {
+      _currentSongIndex = audios.length - 1;
+      currentAudio = audios[_currentSongIndex];
+    }
+    _audio.play(currentAudio!);
+    notifyListeners();
+  }
 }
