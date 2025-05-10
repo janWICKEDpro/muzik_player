@@ -11,7 +11,7 @@ class _PlayListsState extends State<PlayLists> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Playlists"),
+      child: const Text("Playlists"),
     );
   }
 }

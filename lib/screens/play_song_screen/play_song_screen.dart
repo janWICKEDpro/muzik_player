@@ -78,7 +78,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                         },
                         icon: Transform.rotate(
                             angle: pi / 2,
-                            child: Icon(Icons.arrow_forward_ios))),
+                            child: const Icon(Icons.arrow_forward_ios))),
                     const Text(
                       'Now Playing',
                       style: MuzikPlayerTextTheme.songNameStyle,

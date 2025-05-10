@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:marquee/marquee.dart';
+import 'package:muzik_player/providers/songs_provider.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
+import 'package:provider/provider.dart';
 
 class AppTabBar extends StatefulWidget {
   const AppTabBar({super.key, required this.child});
@@ -36,101 +38,114 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-          floatingActionButton: GestureDetector(
-            onTap: () {
-              context.push('/playing');
-            },
-            child: Container(
-              height: 70,
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  color: AppColors.primaryGrey,
-                  borderRadius: BorderRadius.circular(100)),
-              child: LayoutBuilder(builder: (context, constraints) {
-                log("LayoutBuilder: ${constraints.maxWidth}");
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Hero(
-                      tag: '12',
-                      child: Container(
-                        height: constraints.maxWidth * 0.1,
-                        width: constraints.maxWidth * 0.1,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('assets/images/album.png'))),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: 0,
-                            children: [
-                              SizedBox(
-                                height: 20,
-                                width: constraints.maxWidth * 0.35,
-                                child: Marquee(
-                                  text: "Never the same today and forever",
-                                  scrollAxis: Axis.horizontal,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  velocity: 20,
-                                  startAfter: const Duration(seconds: 3),
-                                ),
+          floatingActionButton:
+              Consumer<SongsModel>(builder: (context, provider, child) {
+            return provider.currentAudio == null
+                ? const SizedBox()
+                : GestureDetector(
+                    onTap: () {
+                      context.push('/playing');
+                    },
+                    child: Container(
+                      height: 70,
+                      margin: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryGrey,
+                          borderRadius: BorderRadius.circular(100)),
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        log("LayoutBuilder: ${constraints.maxWidth}");
+                        return Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Hero(
+                              tag: '12',
+                              child: Container(
+                                height: constraints.maxWidth * 0.1,
+                                width: constraints.maxWidth * 0.1,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    image: const DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(
+                                            'assets/images/album.png'))),
                               ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {},
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedBackward02,
-                                  color: AppColors.primaryWhitishGrey,
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {},
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedPause,
-                                  color: AppColors.primaryWhitishGrey,
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                onPressed: () {},
-                                icon: HugeIcon(
-                                  icon: HugeIcons.strokeRoundedForward02,
-                                  color: AppColors.primaryWhitishGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: constraints.maxWidth * 0.8,
-                            child: Slider(
-                              padding: EdgeInsets.zero,
-                              value: 24,
-                              max: 100,
-                              min: 0,
-                              onChanged: (val) {},
-                              activeColor: AppColors.primaryWhitishGrey,
                             ),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              }),
-            ),
-          ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    spacing: 0,
+                                    children: [
+                                      SizedBox(
+                                        height: 20,
+                                        width: constraints.maxWidth * 0.35,
+                                        child: Marquee(
+                                          text:
+                                              "Never the same today and forever",
+                                          scrollAxis: Axis.horizontal,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          velocity: 20,
+                                          startAfter:
+                                              const Duration(seconds: 3),
+                                        ),
+                                      ),
+                                      IconButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {},
+                                        icon: HugeIcon(
+                                          icon:
+                                              HugeIcons.strokeRoundedBackward02,
+                                          color: AppColors.primaryWhitishGrey,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {},
+                                        icon: HugeIcon(
+                                          icon: HugeIcons.strokeRoundedPause,
+                                          color: AppColors.primaryWhitishGrey,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        padding: EdgeInsets.zero,
+                                        onPressed: () {},
+                                        icon: HugeIcon(
+                                          icon:
+                                              HugeIcons.strokeRoundedForward02,
+                                          color: AppColors.primaryWhitishGrey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: constraints.maxWidth * 0.8,
+                                    child: Slider(
+                                      padding: EdgeInsets.zero,
+                                      value: 24,
+                                      max: 100,
+                                      min: 0,
+                                      onChanged: (val) {},
+                                      activeColor: AppColors.primaryWhitishGrey,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                    ),
+                  );
+          }),
           appBar: AppBar(
             toolbarHeight: 40,
             backgroundColor: AppColors.primaryBlack,

@@ -11,7 +11,7 @@ class _ArtistsState extends State<Artists> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('Artists'),
+      child: const Text('Artists'),
     );
   }
 }

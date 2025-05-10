@@ -4,19 +4,26 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:muzik_player/constants/enums.dart';
 import 'package:muzik_player/services/audio_player_service.dart';
+import 'package:muzik_player/services/audio_query_service.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 
 class SongsModel extends ChangeNotifier {
-  final audio = AudioPlayerService();
-  List<FileSystemEntity> songs = [];
+  final _audio = AudioPlayerService();
+  final _audioQueryService = AudioQueryService();
+  List audios = [];
   FileSystemEntity? currentSong;
   GetSongState state = GetSongState.loading;
-
+  SongModel? currentAudio;
   getSongs() async {
     state = GetSongState.loading;
     notifyListeners();
     try {
-      ///songs = await audio.getAudio();
+      final result = await _audioQueryService.fetchAudios();
+      if (result.isNotEmpty) {
+        log('${result.first}');
+      }
       state = GetSongState.success;
+      audios = result;
       notifyListeners();
     } catch (e) {
       log('$e');
@@ -25,7 +32,12 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
-  playerSong() {}
+  playerSong(SongModel audio) {
+    _audio.play(audio);
+    currentAudio = audio;
+    notifyListeners();
+  }
+
   nextSong() {}
   previousSong() {}
 }

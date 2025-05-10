@@ -4,6 +4,7 @@ import 'package:muzik_player/providers/songs_provider.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 import 'package:muzik_player/widgets/song_tile.dart';
+import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -14,6 +15,13 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  final OnAudioQuery _onAudioQuery = OnAudioQuery();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<SongsModel>(builder: (context, provider, child) {
@@ -31,9 +39,17 @@ class _MainScreenState extends State<MainScreen> {
         return Container(
           color: AppColors.primaryBlack,
           child: ListView.builder(
-              itemCount: provider.songs.length,
+              itemCount: provider.audios.length,
               itemBuilder: (context, index) {
-                return SongTile();
+                final audio = provider.audios[index];
+                return SongTile(
+                  onTap: ()  {
+                    provider.playerSong(audio);
+                  },
+                  audio: audio,
+                  onMore: () {},
+                  controller: _onAudioQuery,
+                );
               }),
         );
       }
