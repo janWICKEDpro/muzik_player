@@ -70,7 +70,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                         fit: BoxFit.cover,
                                         image: provider
                                                 .currentAudio!.pictures.isEmpty
-                                            ? AssetImage(
+                                            ? const AssetImage(
                                                     'assets/images/album.png')
                                                 as ImageProvider<Object>
                                             : MemoryImage(provider.currentAudio!

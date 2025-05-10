@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
-import 'package:muzik_player/constants/mediaStore.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -51,11 +50,6 @@ class AudioQueryService {
       return androidInfo.version.sdkInt >= 30;
     }
     return false;
-  }
-
-  Future<bool> _isAndroid11OrAbove() async {
-    return (await Permission.manageExternalStorage.isGranted) ||
-        (await isAndroidElevenOrLater());
   }
 
   Future<List<AudioMetadata>> fetchAudios() async {
