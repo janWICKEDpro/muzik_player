@@ -66,10 +66,16 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                 width: constraints.maxWidth * 0.1,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
-                                    image: const DecorationImage(
+                                    image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage(
-                                            'assets/images/album.png'))),
+                                        image: provider
+                                                .currentAudio!.pictures.isEmpty
+                                            ? AssetImage(
+                                                    'assets/images/album.png')
+                                                as ImageProvider<Object>
+                                            : MemoryImage(provider.currentAudio!
+                                                    .pictures.first.bytes)
+                                                as ImageProvider<Object>)),
                               ),
                             ),
                             Padding(
@@ -89,7 +95,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                         width: constraints.maxWidth * 0.35,
                                         child: Marquee(
                                           text:
-                                              "Never the same today and forever",
+                                              "${provider.currentAudio!.title}",
                                           scrollAxis: Axis.horizontal,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.center,

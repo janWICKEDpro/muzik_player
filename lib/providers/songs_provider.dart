@@ -1,19 +1,19 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:muzik_player/constants/enums.dart';
 import 'package:muzik_player/services/audio_player_service.dart';
 import 'package:muzik_player/services/audio_query_service.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 class SongsModel extends ChangeNotifier {
   final _audio = AudioPlayerService();
   final _audioQueryService = AudioQueryService();
-  List audios = [];
+  List<AudioMetadata> audios = [];
   FileSystemEntity? currentSong;
   GetSongState state = GetSongState.loading;
-  SongModel? currentAudio;
+  AudioMetadata? currentAudio;
   getSongs() async {
     state = GetSongState.loading;
     notifyListeners();
@@ -32,7 +32,7 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
-  playerSong(SongModel audio) {
+  playerSong(AudioMetadata audio) {
     _audio.play(audio);
     currentAudio = audio;
     notifyListeners();

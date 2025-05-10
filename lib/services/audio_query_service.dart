@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:muzik_player/constants/mediaStore.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -57,7 +58,7 @@ class AudioQueryService {
         (await isAndroidElevenOrLater());
   }
 
-  Future<List<FileSystemEntity>> fetchAudios() async {
+  Future<List<AudioMetadata>> fetchAudios() async {
     try {
       if (await requestStoragePermission()) {
         return await fetchMp3s();
@@ -69,11 +70,11 @@ class AudioQueryService {
     }
   }
 
-  Future<List<FileSystemEntity>> fetchMp3s() async {
+  Future<List<AudioMetadata>> fetchMp3s() async {
     const String downloadsDirectoryPath = "/storage/emulated/0";
 
     final Directory downloadsDirectory = Directory(downloadsDirectoryPath);
-    List<FileSystemEntity> foundMp3s = [];
+    List<AudioMetadata> foundMp3s = [];
 
     try {
       if (await downloadsDirectory.exists()) {
@@ -84,12 +85,15 @@ class AudioQueryService {
           if (entity is Directory) {
             entity.listSync(recursive: true).forEach((element) {
               if (element is File && element.path.endsWith('.mp3')) {
-                foundMp3s.add(element);
+                final metadata =
+                    readMetadata(File(element.path), getImage: true);
+                foundMp3s.add(metadata);
               }
             });
           }
           if (entity is File) {
-            foundMp3s.add(entity);
+            final metadata = readMetadata(File(entity.path), getImage: true);
+            foundMp3s.add(metadata);
           }
         }
 
