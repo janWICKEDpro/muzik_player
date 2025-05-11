@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:muzik_player/constants/enums.dart';
 import 'package:muzik_player/services/audio_player_service.dart';
@@ -11,21 +12,29 @@ class SongsModel extends ChangeNotifier {
   final _audio = AudioPlayerService();
   final _audioQueryService = AudioQueryService();
   List<AudioMetadata> audios = [];
-  FileSystemEntity? currentSong;
   GetSongState state = GetSongState.loading;
   AudioMetadata? currentAudio;
   int _currentSongIndex = 0;
   int get currentSongIndex => _currentSongIndex;
+  Duration? currentDuration;
+  
+  PlayerState get playerState => _audio.playerState;
+
+  StreamSubscription<Duration>? _positionSubscription;
+
   getSongs() async {
+    _positionSubscription?.cancel();
+    _positionSubscription = null;
     state = GetSongState.loading;
     notifyListeners();
     try {
       final result = await _audioQueryService.fetchAudios();
       if (result.isNotEmpty) {
-        log('${result.first}');
+        state = GetSongState.success;
+        audios = result;
+      } else {
+        state = GetSongState.empty;
       }
-      state = GetSongState.success;
-      audios = result;
       notifyListeners();
     } catch (e) {
       log('$e');
@@ -34,10 +43,22 @@ class SongsModel extends ChangeNotifier {
     }
   }
 
-  playerSong(AudioMetadata audio) {
-    _audio.play(audio);
+  playerSong(AudioMetadata audio) async {
+   await _audio.stop();
+   await _audio.play(audio);
     currentAudio = audio;
+    subscribeToPositionStream();
     notifyListeners();
+  }
+
+  pauseOrPlay() {
+    if (currentAudio != null) {
+      if (_audio.playerState == PlayerState.paused) {
+        _audio.resume();
+      } else {
+        _audio.pause();
+      }
+    }
   }
 
   nextSong() {
@@ -62,5 +83,16 @@ class SongsModel extends ChangeNotifier {
     }
     _audio.play(currentAudio!);
     notifyListeners();
+  }
+
+  seekSong(double position) {
+    _audio.seek(position);
+  }
+
+  void subscribeToPositionStream() {
+    _positionSubscription = _audio.positionStream.listen((position) {
+      currentDuration = position;
+      notifyListeners();
+    });
   }
 }

@@ -3,4 +3,4 @@ enum SongState {
   paused,
 }
 
-enum GetSongState { loading, failed, success }
+enum GetSongState { loading, failed, success, empty }

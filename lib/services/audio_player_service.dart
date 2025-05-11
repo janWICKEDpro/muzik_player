@@ -1,20 +1,31 @@
-import 'dart:developer';
-import 'dart:io';
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class AudioPlayerService {
   final _audioPlayer = AudioPlayer();
-  void pause(FileSystemEntity song) async {
-    await _audioPlayer.play(DeviceFileSource(song.path));
-    await Future.delayed(const Duration(seconds: 10));
-    await _audioPlayer.stop();
+  void pause() async {
+    await _audioPlayer.pause();
   }
 
-  void play(AudioMetadata song) async {
-    log('$song');
+  Future<void> play(AudioMetadata song) async {
     await _audioPlayer.play(BytesSource(song.file.readAsBytesSync()));
   }
 
-  void seek() async {}
+  void resume() async {
+    await _audioPlayer.resume();
+  }
+
+  void seek(double position) async {
+    await _audioPlayer.seek(Duration(seconds: position.toInt()));
+  }
+
+  Future<void> stop() async {
+    await _audioPlayer.stop();
+  }
+
+  Stream<Duration> get positionStream => _audioPlayer.onPositionChanged;
+  Stream<PlayerState> get playerStateStream =>
+      _audioPlayer.onPlayerStateChanged;
+  Stream<Duration> get durationStream => _audioPlayer.onDurationChanged;
+  PlayerState get playerState => _audioPlayer.state;
 }

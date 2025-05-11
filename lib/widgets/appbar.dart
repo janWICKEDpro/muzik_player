@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hugeicons/hugeicons.dart';
@@ -54,7 +53,6 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                           color: AppColors.primaryGrey,
                           borderRadius: BorderRadius.circular(100)),
                       child: LayoutBuilder(builder: (context, constraints) {
-                        log("LayoutBuilder: ${constraints.maxWidth}");
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -117,11 +115,23 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                       ),
                                       IconButton(
                                         padding: EdgeInsets.zero,
-                                        onPressed: () {},
-                                        icon: HugeIcon(
-                                          icon: HugeIcons.strokeRoundedPause,
-                                          color: AppColors.primaryWhitishGrey,
-                                        ),
+                                        onPressed: () {
+                                          provider.pauseOrPlay();
+                                        },
+                                        icon: provider.playerState ==
+                                                PlayerState.playing
+                                            ? HugeIcon(
+                                                icon: HugeIcons
+                                                    .strokeRoundedPause,
+                                                color: AppColors
+                                                    .primaryWhitishGrey,
+                                              )
+                                            : HugeIcon(
+                                                icon:
+                                                    HugeIcons.strokeRoundedPlay,
+                                                color: AppColors
+                                                    .primaryWhitishGrey,
+                                              ),
                                       ),
                                       IconButton(
                                         padding: EdgeInsets.zero,
@@ -140,10 +150,19 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                                     width: constraints.maxWidth * 0.8,
                                     child: Slider(
                                       padding: EdgeInsets.zero,
-                                      value: 24,
-                                      max: 100,
+                                      value: provider.currentDuration?.inSeconds
+                                              .toDouble() ??
+                                          0,
+                                      max: provider
+                                              .currentAudio!.duration?.inSeconds
+                                              .toDouble() ??
+                                          0,
                                       min: 0,
-                                      onChanged: (val) {},
+                                      onChanged: (val) {
+                                        provider.currentDuration =
+                                            Duration(seconds: val.toInt());
+                                        provider.seekSong(val);
+                                      },
                                       activeColor: AppColors.primaryWhitishGrey,
                                     ),
                                   )
