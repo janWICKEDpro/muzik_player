@@ -17,14 +17,18 @@ class SongsModel extends ChangeNotifier {
   int _currentSongIndex = 0;
   int get currentSongIndex => _currentSongIndex;
   Duration? currentDuration;
-  
-  PlayerState get playerState => _audio.playerState;
+
+  PlayerState _currentAudioPlayerState = PlayerState.playing;
+  PlayerState get playerState => _currentAudioPlayerState;
 
   StreamSubscription<Duration>? _positionSubscription;
+  StreamSubscription<PlayerState>? _playerStateSubscription;
 
   getSongs() async {
     _positionSubscription?.cancel();
     _positionSubscription = null;
+    _playerStateSubscription?.cancel();
+    _playerStateSubscription = null;
     state = GetSongState.loading;
     notifyListeners();
     try {
@@ -44,10 +48,11 @@ class SongsModel extends ChangeNotifier {
   }
 
   playerSong(AudioMetadata audio) async {
-   await _audio.stop();
-   await _audio.play(audio);
+    await _audio.stop();
+    await _audio.play(audio);
     currentAudio = audio;
     subscribeToPositionStream();
+    subscribeToPlayerState();
     notifyListeners();
   }
 
@@ -92,6 +97,13 @@ class SongsModel extends ChangeNotifier {
   void subscribeToPositionStream() {
     _positionSubscription = _audio.positionStream.listen((position) {
       currentDuration = position;
+      notifyListeners();
+    });
+  }
+
+  void subscribeToPlayerState() {
+    _playerStateSubscription = _audio.playerStateStream.listen((state) {
+      _currentAudioPlayerState = state;
       notifyListeners();
     });
   }
