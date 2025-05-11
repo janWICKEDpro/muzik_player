@@ -12,6 +12,8 @@ class SongsModel extends ChangeNotifier {
   final _audio = AudioPlayerService();
   final _audioQueryService = AudioQueryService();
   List<AudioMetadata> audios = [];
+  List<Artist> artists = [];
+  List<Album> albums = [];
   GetSongState state = GetSongState.loading;
   AudioMetadata? currentAudio;
   int _currentSongIndex = 0;
@@ -33,11 +35,19 @@ class SongsModel extends ChangeNotifier {
     notifyListeners();
     try {
       final result = await _audioQueryService.fetchAudios();
-      if (result.isNotEmpty) {
-        state = GetSongState.success;
-        audios = result;
+      if (result != null) {
+        if (result.$1.isNotEmpty) {
+          state = GetSongState.success;
+          audios = result.$1;
+          artists = result.$3;
+          albums = result.$2;
+          log('$albums');
+          log('$artists');
+        } else {
+          state = GetSongState.empty;
+        }
       } else {
-        state = GetSongState.empty;
+        state = GetSongState.failed;
       }
       notifyListeners();
     } catch (e) {

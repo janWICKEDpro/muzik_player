@@ -2,25 +2,14 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class AudioQueryService {
-  final OnAudioQuery _audioQuery = OnAudioQuery();
   AudioQueryService._();
   static final AudioQueryService _instance = AudioQueryService._();
   factory AudioQueryService() => _instance;
 
-  Future<bool> requestPermission() async {
-    try {
-      final permissionStatus = await _audioQuery.checkAndRequest();
-      return permissionStatus;
-    } catch (e) {
-      log('Error getting permission status $e');
-      rethrow;
-    }
-  }
 
   Future<bool> requestStoragePermission() async {
     if (Platform.isAndroid) {
@@ -52,50 +41,116 @@ class AudioQueryService {
     return false;
   }
 
-  Future<List<AudioMetadata>> fetchAudios() async {
+  Future<(List<AudioMetadata>, List<Album>, List<Artist>)?>
+      fetchAudios() async {
     try {
       if (await requestStoragePermission()) {
         return await fetchMp3s();
       } else {
-        return [];
+        return null;
       }
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<List<AudioMetadata>> fetchMp3s() async {
+  Future<(List<AudioMetadata>, List<Album>, List<Artist>)> fetchMp3s() async {
     const String downloadsDirectoryPath = "/storage/emulated/0";
 
     final Directory downloadsDirectory = Directory(downloadsDirectoryPath);
     List<AudioMetadata> foundMp3s = [];
-
+    List<Album> albums = [];
+    List<Artist> artists = [];
+    Map<String, List<AudioMetadata>> albumKeys = {};
+    Map<String, List<AudioMetadata>> artistMap = {};
     try {
       if (await downloadsDirectory.exists()) {
         final entities = downloadsDirectory.listSync().toList();
         entities.removeWhere((e) => e.path == "/storage/emulated/0/Android");
         for (var entity in entities) {
-          log('$entity');
           if (entity is Directory) {
             entity.listSync(recursive: true).forEach((element) {
               if (element is File && element.path.endsWith('.mp3')) {
                 final metadata =
                     readMetadata(File(element.path), getImage: true);
+                log('$metadata');
+                if (metadata.album != null) {
+                  log('Got here');
+                  albumKeys.update(
+                    metadata.album!,
+                    (val) {
+                      final newList = val..add(metadata);
+                      return newList;
+                    },
+                    ifAbsent: () => [metadata],
+                  );
+                }else {
+                   albumKeys.update(
+                    "Unkown Album",
+                    (val) {
+                      final newList = val..add(metadata);
+                      return newList;
+                    },
+                    ifAbsent: () => [metadata],
+                  );
+                }
+                if (metadata.artist != null) {
+                  artistMap.update(
+                    metadata.artist!,
+                    (val) {
+                      final newList = val..add(metadata);
+                      return newList;
+                    },
+                    ifAbsent: () => [metadata],
+                  );
+                }
                 foundMp3s.add(metadata);
               }
             });
           }
           if (entity is File) {
             final metadata = readMetadata(File(entity.path), getImage: true);
+            if (metadata.album != null) {
+              albumKeys.update(
+                metadata.album!,
+                (val) {
+                  final newList = val..add(metadata);
+                  return newList;
+                },
+                ifAbsent: () => [metadata],
+              );
+            }
+            if (metadata.artist != null) {
+              artistMap.update(
+                metadata.artist!,
+                (val) {
+                  final newList = val..add(metadata);
+                  return newList;
+                },
+                ifAbsent: () => [metadata],
+              );
+            }
             foundMp3s.add(metadata);
           }
         }
-
-        final statusMessage = foundMp3s.isNotEmpty
-            ? "${foundMp3s.length} MP3 files found."
-            : "No MP3 files found in Downloads.";
-        log(statusMessage);
-        return foundMp3s;
+        for (var key in albumKeys.keys) {
+          albums.add(
+            Album(
+                name: key,
+                author: albumKeys[key]?.first.artist ?? "Unkown",
+                songs: albumKeys[key] ?? []),
+          );
+        }
+        for (var key in artistMap.keys) {
+          artists.add(
+            Artist(
+                name: key,
+                songs: albumKeys[key]?.length ?? 0,
+                albums: getAlbumCount(key, foundMp3s),
+                audios: albumKeys[key] ?? []),
+          );
+        }
+        return (foundMp3s, albums, artists);
       } else {
         const statusMessage =
             "Downloads directory not found at $downloadsDirectoryPath";
@@ -109,30 +164,37 @@ class AudioQueryService {
     }
   }
 
-  Future<List<AlbumModel>> fetchAlbums() async {
-    try {
-      final albums = await _audioQuery.queryAlbums();
-      return albums;
-    } catch (e) {
-      rethrow;
+
+  int getAlbumCount(String artist, List<AudioMetadata> audios) {
+    int count = 0;
+    for (var element in audios) {
+      if (element.artist == artist) {
+        count++;
+      }
     }
+    return count;
   }
 
-  Future<List<ArtistModel>> fetchArtists() async {
-    try {
-      final artists = await _audioQuery.queryArtists();
-      return artists;
-    } catch (e) {
-      rethrow;
-    }
-  }
+}
 
-  Future<List> fetchPlaylists() async {
-    try {
-      final playlists = await _audioQuery.queryPlaylists();
-      return playlists;
-    } catch (e) {
-      rethrow;
-    }
-  }
+class Album {
+  String? name;
+  String? author;
+  List<AudioMetadata> songs;
+
+  Album({this.name, this.author, required this.songs});
+}
+
+class Artist {
+  String? name;
+  int songs;
+  int albums;
+  List<AudioMetadata> audios;
+
+  Artist({
+    required this.name,
+    required this.songs,
+    required this.albums,
+    required this.audios,
+  });
 }

@@ -199,12 +199,12 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                     case 1:
                       _selectedIndex = value;
                       setState(() {});
-                      context.go('/artists');
+                      context.go('/albums');
                       break;
                     case 2:
                       _selectedIndex = value;
                       setState(() {});
-                      context.go('/albums');
+                      context.go('/artists');
                       break;
                     case 3:
                       _selectedIndex = value;
@@ -261,10 +261,10 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                         context.go('/');
                         break;
                       case 1:
-                        context.go('/artists');
+                        context.go('/albums');
                         break;
                       case 2:
-                        context.go('/albums');
+                        context.go('/artists');
                         break;
                       case 3:
                         context.go('/playlists');

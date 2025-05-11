@@ -1,7 +1,6 @@
 import 'package:audio_metadata_reader/audio_metadata_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:muzik_player/themes/text_theme.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 
 class SongTile extends StatelessWidget {
   const SongTile(
@@ -10,14 +9,12 @@ class SongTile extends StatelessWidget {
       this.artist,
       this.onTap,
       required this.audio,
-      required this.onMore,
-      required this.controller});
+      required this.onMore,});
   final String? songName;
   final String? artist;
   final Function()? onTap;
   final Function() onMore;
   final AudioMetadata audio;
-  final OnAudioQuery controller;
   @override
   Widget build(BuildContext context) {
     return ListTile(

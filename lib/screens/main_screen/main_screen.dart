@@ -4,7 +4,6 @@ import 'package:muzik_player/providers/songs_provider.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 import 'package:muzik_player/widgets/song_tile.dart';
-import 'package:on_audio_query/on_audio_query.dart';
 import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
@@ -15,7 +14,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final OnAudioQuery _onAudioQuery = OnAudioQuery();
 
   @override
   void initState() {
@@ -48,7 +46,6 @@ class _MainScreenState extends State<MainScreen> {
                   },
                   audio: audio,
                   onMore: () {},
-                  controller: _onAudioQuery,
                 );
               }),
         );
