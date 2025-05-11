@@ -58,27 +58,27 @@ class AppRouter {
                       GoRoute(
                         path: 'playing',
                         parentNavigatorKey: _rootNavigatorKey,
-                        builder: (context, state) {
-                          return const PlaySongScreen();
-                        },
-                        // pageBuilder: (context, state) {
-                        //   return CustomTransitionPage(
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         const begin = Offset(0.0, 1.0);
-                        //         const end = Offset.zero;
-                        //         const curve = Curves.ease;
+                        // builder: (context, state) {
+                        //   return const PlaySongScreen();
+                        // },
+                        pageBuilder: (context, state) {
+                          return CustomTransitionPage(
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin = Offset(0.0, 1.0);
+                                const end = Offset.zero;
+                                const curve = Curves.ease;
 
-                        //         var tween = Tween(begin: begin, end: end)
-                        //             .chain(CurveTween(curve: curve));
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
 
-                        //         return SlideTransition(
-                        //           position: animation.drive(tween),
-                        //           child: child,
-                        //         );
-                        //       },
-                        //       child: const PlaySongScreen());
-                        // }),
+                                return SlideTransition(
+                                  position: animation.drive(tween),
+                                  child: child,
+                                );
+                              },
+                              child: const PlaySongScreen());
+                        }
                       )
                     ]),
                 GoRoute(

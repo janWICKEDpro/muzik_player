@@ -43,7 +43,7 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
                 ? const SizedBox()
                 : GestureDetector(
                     onTap: () {
-                      context.push('/playing');
+                      context.go('/playing');
                     },
                     child: Container(
                       height: 70,
