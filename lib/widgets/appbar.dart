@@ -252,7 +252,6 @@ class _AppTabBarState extends State<AppTabBar> with TickerProviderStateMixin {
           body: GestureDetector(
               onHorizontalDragEnd: (details) {
                 if (details.primaryVelocity! > 0) {
-                  // Swiped to the right
                   setState(() {
                     _selectedIndex = (_selectedIndex - 1).clamp(0, 3);
                     _tabController.animateTo(_selectedIndex);

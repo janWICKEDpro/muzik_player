@@ -36,14 +36,6 @@ class _AlbumsState extends State<Albums> {
               crossAxisSpacing: 5,
               children: [
                 ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-                ...provider.albums.map((e) => AlbumTile(album: e))
               ],
             ));
       }
