@@ -27,6 +27,14 @@ class _AlbumsState extends State<Albums> {
                 MuzikPlayerTextTheme.songNameStyle.copyWith(color: Colors.red),
           ),
         );
+      } else if (provider.state == GetSongState.empty) {
+        return Center(
+          child: Text(
+            'No songs found',
+            style:
+                MuzikPlayerTextTheme.songNameStyle.copyWith(color: Colors.red),
+          ),
+        );
       } else {
         return Container(
             color: AppColors.primaryBlack,
