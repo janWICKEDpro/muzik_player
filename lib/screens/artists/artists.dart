@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muzik_player/constants/enums.dart';
 import 'package:muzik_player/providers/songs_provider.dart';
-import 'package:muzik_player/screens/albums/widgets/album_tile.dart';
+import 'package:muzik_player/screens/artists/widgets/artist_tile.dart';
 import 'package:muzik_player/themes/colors.dart';
 import 'package:muzik_player/themes/text_theme.dart';
 import 'package:provider/provider.dart';
@@ -42,9 +42,7 @@ class _ArtistsState extends State<Artists> {
               crossAxisCount: 3,
               mainAxisSpacing: 20,
               crossAxisSpacing: 5,
-              children: [
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-              ],
+              children: [...provider.artists.map((e) => ArtistTile(artist: e))],
             ));
       }
     });
