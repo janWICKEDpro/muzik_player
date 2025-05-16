@@ -83,7 +83,7 @@ class AudioQueryService {
                 if (element is File && element.path.endsWith('.mp3')) {
                   try {
                     final metadata =
-                        await readMetadata(File(element.path), getImage: true);
+                        readMetadata(File(element.path), getImage: true);
                     log('$metadata');
                     if (metadata.album != null) {
                       albumKeys.update(
@@ -115,7 +115,7 @@ class AudioQueryService {
             if (entity is File && entity.path.endsWith('.mp3')) {
               try {
                 final metadata =
-                    await readMetadata(File(entity.path), getImage: true);
+                    readMetadata(File(entity.path), getImage: true);
                 if (metadata.album != null) {
                   albumKeys.update(
                     metadata.album!,
