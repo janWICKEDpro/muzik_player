@@ -12,26 +12,6 @@ void main() async {
   if (Platform.isAndroid) {
     await MediaStore.ensureInitialized();
   }
-  //   List<Permission> permissions = [
-  //   Permission.storage,
-  //   Permission.manageExternalStorage
-  // ];
-
-  // if ((await mediaStorePlugin.getPlatformSDKInt()) >= 33) {
-  //   // permissions.add(Permission.photos);
-  //   permissions.add(Permission.audio);
-  //   // permissions.add(Permission.videos);
-  // }
-
-  // for (var permission in permissions) {
-  //   if (await permission.isGranted) {
-  //     continue;
-  //   } else {
-  //     await permission.request();
-  //   }
-  // }
-
-  // MediaStore.appFolder = "MediaStorePlugin";
 
   runApp(App());
 }
