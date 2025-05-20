@@ -38,13 +38,17 @@ class _AlbumsState extends State<Albums> {
       } else {
         return Container(
             color: AppColors.primaryBlack,
-            child: GridView.count(
-              crossAxisCount: 3,
-              mainAxisSpacing: 20,
-              crossAxisSpacing: 5,
-              children: [
-                ...provider.albums.map((e) => AlbumTile(album: e)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 16),
+              child: GridView.count(
+                crossAxisCount: 3,
+                mainAxisSpacing: 5,
+                crossAxisSpacing: 5,
+                childAspectRatio: MediaQuery.sizeOf(context).width * 0.2 / 100,
+                children: [
+                  ...provider.albums.map((e) => AlbumTile(album: e)),
+                ],
+              ),
             ));
       }
     });
