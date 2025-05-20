@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
@@ -56,20 +57,24 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                       .currentAudio!
                       .pictures
                       .isNotEmpty)
-              ? Image.memory(
-                  Provider.of<SongsModel>(context)
-                      .currentAudio!
-                      .pictures
-                      .first
-                      .bytes,
-                  height: double.infinity,
-                  width: double.infinity,
+              ? Blur(
+                  child: Image.memory(
+                    Provider.of<SongsModel>(context)
+                        .currentAudio!
+                        .pictures
+                        .first
+                        .bytes,
+                    height: double.infinity,
+                    width: double.infinity,
+                  ),
                 )
-              : Image.asset(
-                  'assets/images/album.png',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: double.infinity,
+              : Blur(
+                  child: Image.asset(
+                    'assets/images/album.png',
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
                 ),
           // BackdropFilter(
           //   // filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
@@ -192,7 +197,7 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                         IconButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                             Provider.of<SongsModel>(context, listen: false)
+                            Provider.of<SongsModel>(context, listen: false)
                                 .previousSong();
                           },
                           icon: HugeIcon(

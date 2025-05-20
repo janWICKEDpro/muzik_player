@@ -13,16 +13,12 @@ class AudioQueryService {
   Future<bool> requestStoragePermission() async {
     if (Platform.isAndroid) {
       if (await isAndroidElevenOrLater()) {
-        log("here 11 and up");
         if (!(await Permission.manageExternalStorage.isGranted)) {
-          log("no manage external storage");
           final status1 = await Permission.manageExternalStorage.request();
           if (!(await Permission.audio.isGranted)) {
-            log("no audio permission");
             final status = await Permission.audio.request();
             return status.isGranted;
           } else {
-            log("hmmm");
             return true;
           }
         } else {
