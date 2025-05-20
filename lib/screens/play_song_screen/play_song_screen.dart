@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -58,6 +59,8 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
                       .pictures
                       .isNotEmpty)
               ? Blur(
+                  blur: 50,
+                  blurColor: AppColors.primaryBlack,
                   child: Image.memory(
                     Provider.of<SongsModel>(context)
                         .currentAudio!
@@ -136,109 +139,134 @@ class _PlaySongScreenState extends State<PlaySongScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: LayoutBuilder(builder: (context, constraints) {
+                  return SizedBox(
+                    width: constraints.maxWidth,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          Provider.of<SongsModel>(context)
-                                  .currentAudio
-                                  ?.title ??
-                              "",
-                          style: MuzikPlayerTextTheme.songNameStyle,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                Provider.of<SongsModel>(context)
+                                        .currentAudio
+                                        ?.title ??
+                                    "",
+                                style: MuzikPlayerTextTheme.songNameStyle,
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.favorite_outline))
+                          ],
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.favorite_outline))
+                        SizedBox(
+                          width: constraints.maxWidth,
+                          child: Tooltip(
+                            showDuration: const Duration(seconds: 3),
+                            message: Provider.of<SongsModel>(context)
+                                .currentAudio
+                                ?.artist ?? "",
+                            child: Text(
+                              Provider.of<SongsModel>(context)
+                                      .currentAudio
+                                      ?.artist ??
+                                  "",
+                              style: MuzikPlayerTextTheme.authorNameStyle,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          child: Slider(
+                            padding: EdgeInsets.zero,
+                            value: Provider.of<SongsModel>(context)
+                                    .currentDuration
+                                    ?.inSeconds
+                                    .toDouble() ??
+                                0,
+                            max: Provider.of<SongsModel>(context)
+                                    .currentAudio!
+                                    .duration
+                                    ?.inSeconds
+                                    .toDouble() ??
+                                0,
+                            min: 0,
+                            onChanged: (val) {
+                              Provider.of<SongsModel>(context).currentDuration =
+                                  Duration(seconds: val.toInt());
+                              Provider.of<SongsModel>(context).seekSong(val);
+                            },
+                            activeColor: AppColors.primaryWhitishGrey,
+                          ),
+                        ),
+                        const Gap(10),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {},
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedShuffle,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                Provider.of<SongsModel>(context, listen: false)
+                                    .previousSong();
+                              },
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedBackward02,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                Provider.of<SongsModel>(context, listen: false)
+                                    .pauseOrPlay();
+                              },
+                              icon: Provider.of<SongsModel>(context)
+                                          .playerState ==
+                                      PlayerState.playing
+                                  ? HugeIcon(
+                                      icon: HugeIcons.strokeRoundedPause,
+                                      color: AppColors.primaryWhitishGrey,
+                                    )
+                                  : HugeIcon(
+                                      icon: HugeIcons.strokeRoundedPlay,
+                                      color: AppColors.primaryWhitishGrey,
+                                    ),
+                            ),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                Provider.of<SongsModel>(context, listen: false)
+                                    .nextSong();
+                              },
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedForward02,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {},
+                              icon: HugeIcon(
+                                icon: HugeIcons.strokeRoundedShuffle,
+                                color: AppColors.primaryWhitishGrey,
+                              ),
+                            ),
+                          ],
+                        )
                       ],
                     ),
-                    Text(
-                      Provider.of<SongsModel>(context).currentAudio?.artist ??
-                          "",
-                      style: MuzikPlayerTextTheme.authorNameStyle,
-                    ),
-                    SizedBox(
-                      child: Slider(
-                        padding: EdgeInsets.zero,
-                        value: Provider.of<SongsModel>(context)
-                                .currentDuration
-                                ?.inSeconds
-                                .toDouble() ??
-                            0,
-                        max: Provider.of<SongsModel>(context)
-                                .currentAudio!
-                                .duration
-                                ?.inSeconds
-                                .toDouble() ??
-                            0,
-                        min: 0,
-                        onChanged: (val) {
-                          Provider.of<SongsModel>(context).currentDuration =
-                              Duration(seconds: val.toInt());
-                          Provider.of<SongsModel>(context).seekSong(val);
-                        },
-                        activeColor: AppColors.primaryWhitishGrey,
-                      ),
-                    ),
-                    const Gap(40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: HugeIcon(
-                            icon: HugeIcons.strokeRoundedShuffle,
-                            color: AppColors.primaryWhitishGrey,
-                          ),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            Provider.of<SongsModel>(context, listen: false)
-                                .previousSong();
-                          },
-                          icon: HugeIcon(
-                            icon: HugeIcons.strokeRoundedBackward02,
-                            color: AppColors.primaryWhitishGrey,
-                          ),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            Provider.of<SongsModel>(context, listen: false)
-                                .pauseOrPlay();
-                          },
-                          icon: HugeIcon(
-                            icon: HugeIcons.strokeRoundedPause,
-                            color: AppColors.primaryWhitishGrey,
-                          ),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {
-                            Provider.of<SongsModel>(context, listen: false)
-                                .nextSong();
-                          },
-                          icon: HugeIcon(
-                            icon: HugeIcons.strokeRoundedForward02,
-                            color: AppColors.primaryWhitishGrey,
-                          ),
-                        ),
-                        IconButton(
-                          padding: EdgeInsets.zero,
-                          onPressed: () {},
-                          icon: HugeIcon(
-                            icon: HugeIcons.strokeRoundedShuffle,
-                            color: AppColors.primaryWhitishGrey,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                  );
+                }),
               )
             ],
           )
